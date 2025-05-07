@@ -1,5 +1,6 @@
 # function to read PalMOD format into LiPD
 devtools::install_github("nickmckay/lipdR")
+
 # this version does not split the metadata and data by retrieval
 # and adds the updated age model to the paleo data
 
@@ -69,7 +70,7 @@ PALMOD2LiPD <- function(x, path = "dataLiPD"){   # x is list with data
   # PALMOD sometimes has the following addtional fields
   # DataDOI: not relevant as we have DataLink
   # RetrievalNumber: not relevant, only for internal use
-  # Publication: for publications without link or doi  
+  # Publication: for publications without link or doi. These are currently ignored, but we could include them in the pub field, no?
   # PublicationLink: for publications without doi, but with alternative identifier  
   
   paleoLipd <- c("description", "variableName","variableType","units","analyticalError","reproducibility","measurementInstrument","measurementLaboratory","sampleThickness","measurementMaterial","sensorSpecies","measurementN","measurementSizeFraction","notes","habitatSeason","habitatDepth","equilibriumOffset","calibrationEquation","calibrationUncertainty","calibrationDOI","transferFunctionTrainingSet","transferFunctionUncertainty","transferFunctionDOI", 'hasPubDOI', 'hasDataLink', "TSid")

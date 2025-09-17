@@ -24,7 +24,8 @@ PALMOD2LiPD <- function(x, path = "dataLiPD/"){   # x is list with data
   #root
   L$createdBy <- "PALMOD2LiPD"
   L$dataSetName <- e$site$SiteName
-  L$lipdVersion <- 1.3 # probably needs an update
+  L$datasetId <- paste0("pmdsid",L$dataSetName) |> str_remove_all(pattern = "[^A-Za-z0-9]")
+  L$lipdVersion <- 1.3 
   
   #NOTE THIS!!!!
   L$archiveType <- "MarineSediment"
@@ -103,7 +104,7 @@ PALMOD2LiPD <- function(x, path = "dataLiPD/"){   # x is list with data
       # mt[[i]]$TSid <- createTSid()
       names(mt)[i] <- mt[[i]]$variableName
     }
-    mt
+    return(mt)
   }
   
   paleoData <- list(makeMeasurementTable(e$meta, e$data)) # does this need to be a list?
@@ -351,7 +352,8 @@ PALMOD2LiPD <- function(x, path = "dataLiPD/"){   # x is list with data
   #save(L, file = paste0(path, L$dataSetName, '.Rdata'))
   
   # # write to LiPD
-  writeLipd(L, path = file.path(path,paste0(L$dataSetName,".lpd")))
+  L <- lipdR::as.lipd(L)
+  #writeLipd(L, path = file.path(path,paste0(L$dataSetName,".lpd")))
   return(L)
   #L2 <- readLipd("MD02_2529.lpd")
 }
